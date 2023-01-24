@@ -84,12 +84,13 @@ where ytt2.index =
         (select max(tip_amount)
             from yellow_taxi_trips ytt
         left join taxi_zones_lookup z on ytt."PULocationID" =  z."LocationID"
-        where z."Zone" = 'Astoria
-        ')
+        where z."Zone" = 'Astoria'
+        )
     )
 ```
 
 it was tricky to figure out that some column names should be put in "" as "PULocationID". I don't know why. I must investigate it.
+
 Update 1
 The explanation is - Postgres is case sensitive, so column name "ColName" should be double-quoted. It's very unconvinient for me
 
