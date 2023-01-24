@@ -22,7 +22,7 @@ where lpep_pickup_datetime::date = '2019-01-15'
 ```
 **Answer is 20530**
 
-Need Double quoting capitalazed column names in Postgres is confusing
+Need Double quoting capitalized column names in Postgres is confusing
 
 General problems with acces to git repository, as GitHub dropped password auth. 
 Got help from 
