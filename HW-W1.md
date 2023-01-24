@@ -43,9 +43,9 @@ simplest query is
 ```SQL
 select ytt.lpep_pickup_datetime::date 
     from public.yellow_taxi_trips ytt
-    where ytt.trip_distance in 
-	    (select max(trip_distance) as distance
-		    from public.yellow_taxi_trips)
+where ytt.trip_distance in 
+    (select max(trip_distance) as distance
+        from public.yellow_taxi_trips)
 ```
 
 **Answer is 2019-01-15**
@@ -56,14 +56,14 @@ the longest trip is 117,99 km
 The query I used:
 ```SQL
 select '2 : ', count (*) 
-    from public.yellow_taxi_trips ytt
+  from public.yellow_taxi_trips ytt
 where ytt.passenger_count = 2 
-    and ytt.lpep_pickup_datetime::date = '2019-01-01'
-    union
+  and ytt.lpep_pickup_datetime::date = '2019-01-01'
+union
 select '3 : ', count (*) 
-    from public.yellow_taxi_trips ytt
+  from public.yellow_taxi_trips ytt
 where ytt.passenger_count = 3 
-    and ytt.lpep_pickup_datetime::date = '2019-01-01'
+  and ytt.lpep_pickup_datetime::date = '2019-01-01'
 ```
 	 
 Answer is:
@@ -75,22 +75,23 @@ Answer is:
 The query I used:
 ```SQL
 select ytt2."DOLocationID", z2."Zone"
-        from yellow_taxi_trips ytt2 
-        left join taxi_zones_lookup z2 on z2."LocationID" = ytt2."DOLocationID"
-        where ytt2.index =
-            (select index
-                from yellow_taxi_trips
-                where tip_amount =
-                (select max(tip_amount)
-                    from yellow_taxi_trips ytt
-                    left join taxi_zones_lookup z on ytt."PULocationID" =  z."LocationID"
-                    where z."Zone" = 'Astoria')
-            )
+    from yellow_taxi_trips ytt2 
+left join taxi_zones_lookup z2 on z2."LocationID" = ytt2."DOLocationID"
+where ytt2.index =
+    (select index
+        from yellow_taxi_trips
+    where tip_amount =
+        (select max(tip_amount)
+            from yellow_taxi_trips ytt
+        left join taxi_zones_lookup z on ytt."PULocationID" =  z."LocationID"
+        where z."Zone" = 'Astoria
+        ')
+    )
 ```
 
 it was tricky to figure out that some column names should be put in "" as "PULocationID". I don't know why. I must investigate it.
 Update 1
-The explanation is - Postgres is case sensitive, so column "ColName" should be double-quoted
+The explanation is - Postgres is case sensitive, so column name "ColName" should be double-quoted. It's very unconvinient for me
 
 The answer is:
 **Long Island City/Queens Plaza**
