@@ -58,7 +58,9 @@ where ytt.trip_distance in
         from public.yellow_taxi_trips)
 ```
 
-**Answer is 2019-01-15**
+The answer is 
+
+**2019-01-15**
 
 the longest trip is 117,99 km (Wow!)
 
@@ -107,4 +109,5 @@ Update 1
 The explanation is - Postgres is case sensitive, so column name "ColName" should be double-quoted. It's very unconvinient for me
 
 The answer is:
+
 **Long Island City/Queens Plaza**
